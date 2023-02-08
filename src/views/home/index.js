@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, View } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign'
 import { LinearGradient } from 'expo-linear-gradient';
+import Navigation from "../../navigation";
+
 const { width } = Dimensions.get('window')
-const { height } = Dimensions.get('window')
 
 const Home = () => {
 
@@ -37,7 +38,7 @@ const Home = () => {
         let horaAtual = new Date();
         let hora = horaAtual.getHours();
         let str = hora.toString()
-        
+
         if (str.length <= 1) {
             str = 0 + str
         }
@@ -146,6 +147,8 @@ const Home = () => {
                 </ScrollView>
 
             </LinearGradient>
+
+            <Navigation />
 
 
         </ImageBackground>
