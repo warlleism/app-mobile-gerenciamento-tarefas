@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
-import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign'
 import { LinearGradient } from 'expo-linear-gradient';
 import Navigation from "../../navigation";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get('window')
 
 const Home = () => {
 
+    const Navi = useNavigation()
+
     const arr = [1, 2, 3]
+    
+    const [minuto, setMinuto] = useState()
 
     const [dados, setDados] = useState({
         img: '',
@@ -17,11 +22,12 @@ const Home = () => {
         color: ''
     })
 
-    const [minuto, setMinuto] = useState()
+
+    let horaAtual = new Date();
 
     const setMinute = () => {
 
-        let horaAtual = new Date();
+
         let minuto = horaAtual.getMinutes();
         let str = minuto.toString()
 
@@ -32,10 +38,7 @@ const Home = () => {
         return setMinuto(str)
     }
 
-
     const setBackgroundImageInfo = () => {
-
-        let horaAtual = new Date();
         let hora = horaAtual.getHours();
         let str = hora.toString()
 
@@ -52,9 +55,8 @@ const Home = () => {
     }
 
     const getData = () => {
-        let dataAtual = new Date();
-        var ano = dataAtual.getFullYear();
-        var dia = dataAtual.getDate();
+        var ano = horaAtual.getFullYear();
+        var dia = horaAtual.getDate();
         Date.prototype.getMesEmPortugues = function () {
             if (this.getMonth() == 0) { this.mesEmPortugues = "Janeiro" };
             if (this.getMonth() == 1) { this.mesEmPortugues = "Fevereiro" };
@@ -70,8 +72,8 @@ const Home = () => {
             if (this.getMonth() == 11) { this.mesEmPortugues = "Dezembro" };
         };
 
-        dataAtual.getMesEmPortugues();
-        return { mes: dataAtual.mesEmPortugues, ano: ano, dia: dia }
+        horaAtual.getMesEmPortugues();
+        return { mes: horaAtual.mesEmPortugues, ano: ano, dia: dia }
     }
 
     setInterval(setMinute, 1000)
@@ -117,39 +119,33 @@ const Home = () => {
                 </Text>
             </View>
 
-
-
             <LinearGradient
-                colors={['#1b198700', '#1b1987bd']} style={{
+                start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
+                colors={['#ff005200', '#013a52', '#013a52']}
+                style={{
                     width: width,
                     height: 250,
                     position: "absolute",
                     bottom: 0
                 }}>
 
-                <ScrollView horizontal style={{ backgroundColor: "#01176752" }}>
-
+                <ScrollView horizontal>
                     {
                         arr.map(_ => {
                             return (
-                                <View style={styles.containerTarefas}>
+                                <TouchableOpacity onPress={()=> Navi.navigate('Listar')} style={styles.containerTarefas}>
                                     <Icon name="calendar" size={30} color={'#fff'} style={{ marginRight: 10 }} />
                                     <View style={{ width: "90%" }}>
                                         <Text style={{ color: "#fff" }}>14/02/2023 - 12:30 pm</Text>
                                         <Text style={{ color: '#fff' }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             )
                         })
                     }
-
-
                 </ScrollView>
-
             </LinearGradient>
-
             <Navigation />
-
 
         </ImageBackground>
     )

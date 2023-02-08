@@ -19,7 +19,7 @@ const Navigation = () => {
         }
 
         if (str >= 6 && str <= 17) {
-            return { cor: '#014867' }
+            return { cor: '#013A52' }
         } else {
             return { cor: '#1B1987' }
         }
@@ -41,13 +41,13 @@ const Navigation = () => {
             backgroundColor: setBarColor().cor,
         }}>
             <TouchableOpacity onPress={() => Navigation.navigate('Home')}>
-                <Icon name="home" size={30} color={'#fff'} />
+                <Icon name="home" size={25} color={'#fff'} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => Navigation.navigate('Tarefas')}>
-                <Icon name="calendar" size={30} color={'#fff'} />
+                <Icon name="calendar" size={25} color={'#fff'} />
             </TouchableOpacity>
-            <TouchableOpacity>
-                <Icon name="pluscircleo" size={30} color={'#fff'} />
+            <TouchableOpacity onPress={()=> Navigation.navigate('Nova')}>
+                <Icon name="plus" size={25} color={'#fff'} />
             </TouchableOpacity>
         </View>
     )

@@ -1,11 +1,11 @@
 import Home from './src/views/home';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Dimensions, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign'
 import Tarefas from './src/views/tarefas/index';
+import Listar from './src/views/listar';
+import NovaTarefa from './src/views/novaTarefa/index';
+import Provider from './src/context/provider';
 
-const { width } = Dimensions.get('window')
 
 const Stack = createStackNavigator()
 
@@ -52,6 +52,22 @@ function MyStack() {
             close: config,
           },
         }} />
+      <Stack.Screen name="Listar" component={Listar}
+        options={{
+          cardStyleInterpolator: forFade,
+          transitionSpec: {
+            open: config,
+            close: config,
+          },
+        }} />
+      <Stack.Screen name="Nova" component={NovaTarefa}
+        options={{
+          cardStyleInterpolator: forFade,
+          transitionSpec: {
+            open: config,
+            close: config,
+          },
+        }} />
     </Stack.Navigator>
   )
 }
@@ -61,9 +77,11 @@ function MyStack() {
 export default function App() {
 
   return (
-    <NavigationContainer>
-      <MyStack />
-    </NavigationContainer>
+    <Provider>
+      <NavigationContainer>
+        <MyStack />
+      </NavigationContainer>
+    </Provider>
   );
 }
 

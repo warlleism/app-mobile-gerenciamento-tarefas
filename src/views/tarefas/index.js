@@ -2,22 +2,22 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import IconTrash from 'react-native-vector-icons/FontAwesome'
 import Navigation from './../../navigation/index';
 import { useNavigation } from '@react-navigation/native';
-
-const { View, Text, Dimensions, ScrollView, StyleSheet, TouchableOpacity } = require("react-native")
+import { View, Text, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from "react-native"
 
 const { width } = Dimensions.get('window')
+const { height } = Dimensions.get('window')
 
 const Tarefas = () => {
     const arr = [1, 2, 3, 4, 5]
 
     const Navi = useNavigation()
     return (
-        <View style={{ width: width, height: '100%', backgroundColor: "#231A87" }}>
+        <View style={{ width: width, height: '100%', backgroundColor: "#014867" }}>
             <View style={styles.containerArrow}>
                 <TouchableOpacity onPress={() => Navi.navigate('Home')} style={{ width: 60 }}>
                     <Icon name="arrowleft" size={40} color={'#fff'} style={{ marginRight: 10 }} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => Navi.navigate('Home')} style={{
+                <TouchableOpacity onPress={() => Navi.navigate('Nova')} style={{
                     width: 40,
                     backgroundColor: "#fff",
                     borderRadius: 100,
@@ -45,7 +45,7 @@ const Tarefas = () => {
                                         <IconTrash name="trash-o" size={30} color={'#fff'} />
                                     </TouchableOpacity>
                                 </View>
-                                <View style={styles.containerContent}>
+                                <TouchableOpacity onPress={() => Navi.navigate('Listar')} style={styles.containerContent}>
                                     <View>
                                         <Icon name="calendar" size={40} color={'#fff'} style={{ marginRight: 10 }} />
                                     </View>
@@ -53,7 +53,7 @@ const Tarefas = () => {
                                         <Text style={{ marginBottom: 10, color: "#CDCDCD" }}>14/02/2023 - 12:30 pm</Text>
                                         <Text style={{ marginBottom: 10, color: "#fff", fontSize: 15 }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             </View>
                         )
                     })
