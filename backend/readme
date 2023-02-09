@@ -1,0 +1,13 @@
+solução para o problema de mysql2 no vercel
+
+List your global npm packages
+
+npm list -g --depth 0
+
+Uninstall sequelize
+
+npm uninstall -g sequelize
+
+Install sequelize in project scope
+
+npm install --save sequelize
