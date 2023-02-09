@@ -1,77 +1,14 @@
 import Home from './src/views/home';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import Tarefas from './src/views/tarefas/index';
 import Listar from './src/views/listar';
 import NovaTarefa from './src/views/novaTarefa/index';
 import Provider from './src/context/provider';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign'
 
-
-const Stack = createStackNavigator()
-
-function MyStack() {
-
-  const config = {
-    animation: 'stiffness',
-    config: {
-      stiffness: 2000,
-      damping: 500,
-      mass: 3,
-      overshootClamping: true,
-      restDisplacementThreshold: 0.01,
-      restSpeedThreshold: 0.01,
-    },
-  };
-
-  const forFade = ({ current }) => ({
-    cardStyle: {
-      opacity: current.progress,
-    },
-  });
-
-  return (
-    <Stack.Navigator
-
-      screenOptions={{
-        headerMode: 'none',
-      }}>
-      <Stack.Screen name="Home" component={Home}
-        options={{
-          cardStyleInterpolator: forFade,
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
-        }}
-      />
-      <Stack.Screen name="Tarefas" component={Tarefas}
-        options={{
-          cardStyleInterpolator: forFade,
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
-        }} />
-      <Stack.Screen name="Listar" component={Listar}
-        options={{
-          cardStyleInterpolator: forFade,
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
-        }} />
-      <Stack.Screen name="Nova" component={NovaTarefa}
-        options={{
-          cardStyleInterpolator: forFade,
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
-        }} />
-    </Stack.Navigator>
-  )
-}
-
+const Tab = createBottomTabNavigator()
 
 
 export default function App() {
@@ -79,9 +16,100 @@ export default function App() {
   return (
     <Provider>
       <NavigationContainer>
-        <MyStack />
+        <Tab.Navigator
+
+          screenOptions={({ route }) => ({
+            tabBarStyle: {
+              position: 'absolute',
+              bottom: 0,
+              backgroundColor: "#013a52",
+              borderTopColor: "transparent",
+            },
+            tabBarButton: [
+              "Listar",
+              "Listar"
+            ].includes(route.name)
+              ? () => {
+                return null;
+              }
+              : undefined,
+          })}
+
+
+        >
+          <Tab.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+              tabBarLabel: '',
+              tabBarIcon: ({ focused }) => {
+                return <View
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    borderRadius: 100,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Icon name="home" size={30} color={focused ? '#007878f2' : '#ffff'} />
+                </View>
+              }
+            }}
+          />
+
+
+          <Tab.Screen name="Tarefas" component={Tarefas}
+            options={{
+              headerShown: false,
+              tabBarLabel: '',
+              tabBarIcon: ({ focused }) => {
+                return <View
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    borderRadius: 100,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Icon name="calendar" size={30} color={focused ? '#007878f2' : '#ffff'} />
+                </View>
+              }
+            }} />
+
+          <Tab.Screen name="Listar" component={Listar}
+            options={{
+              headerShown: false,
+              tabBarLabel: ''
+            }}
+          />
+
+          <Tab.Screen name="Nova" component={NovaTarefa}
+            options={{
+              headerShown: false,
+              tabBarLabel: '',
+              tabBarIcon: ({ focused }) => {
+                return <View
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    borderRadius: 100,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Icon name="plus" size={30} color={focused ? '#007878f2' : '#ffff'} />
+                </View>
+              }
+            }} />
+        </Tab.Navigator>
+
       </NavigationContainer>
     </Provider>
+
   );
 }
+
 

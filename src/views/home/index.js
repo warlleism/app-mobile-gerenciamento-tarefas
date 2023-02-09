@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign'
 import { LinearGradient } from 'expo-linear-gradient';
-import Navigation from "../../navigation";
 import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get('window')
@@ -11,8 +10,6 @@ const Home = () => {
 
     const Navi = useNavigation()
 
-    const arr = [1, 2, 3]
-    
     const [minuto, setMinuto] = useState()
 
     const [dados, setDados] = useState({
@@ -22,11 +19,9 @@ const Home = () => {
         color: ''
     })
 
-
     let horaAtual = new Date();
 
     const setMinute = () => {
-
 
         let minuto = horaAtual.getMinutes();
         let str = minuto.toString()
@@ -51,7 +46,6 @@ const Home = () => {
         } else {
             return setDados({ ...dados, img: require('../../images/img2.png'), horario: 'Boa noite', hora: str })
         }
-
     }
 
     const getData = () => {
@@ -83,7 +77,6 @@ const Home = () => {
         setMinute()
         getData()
     }, [])
-
 
     return (
         <ImageBackground
@@ -130,22 +123,17 @@ const Home = () => {
                 }}>
 
                 <ScrollView horizontal>
-                    {
-                        arr.map(_ => {
-                            return (
-                                <TouchableOpacity onPress={()=> Navi.navigate('Listar')} style={styles.containerTarefas}>
-                                    <Icon name="calendar" size={30} color={'#fff'} style={{ marginRight: 10 }} />
-                                    <View style={{ width: "90%" }}>
-                                        <Text style={{ color: "#fff" }}>14/02/2023 - 12:30 pm</Text>
-                                        <Text style={{ color: '#fff' }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
+
+                    <TouchableOpacity onPress={() => Navi.navigate('Listar')} style={styles.containerTarefas}>
+                        <Icon name="calendar" size={30} color={'#fff'} style={{ marginRight: 10 }} />
+                        <View style={{ width: "90%" }}>
+                            <Text style={{ color: "#fff" }}>14/02/2023 - 12:30 pm</Text>
+                            <Text style={{ color: '#fff' }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
+                        </View>
+                    </TouchableOpacity>
+
                 </ScrollView>
             </LinearGradient>
-            <Navigation />
 
         </ImageBackground>
     )

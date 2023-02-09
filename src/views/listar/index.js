@@ -5,13 +5,12 @@ import { View, Text, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from
 
 
 const { width } = Dimensions.get('window')
-const { height } = Dimensions.get('window')
 
 const Listar = () => {
 
     const Navi = useNavigation()
     return (
-        <View style={{ width: width, height: '100%', backgroundColor: "#014867" }}>
+        <View style={{ width: width, height: '100%', backgroundColor: "#013a52" }}>
             <View style={styles.containerArrow}>
                 <TouchableOpacity onPress={() => Navi.navigate('Tarefas')} style={{ width: 60 }}>
                     <Icon name="arrowleft" size={40} color={'#fff'} style={{ marginRight: 10 }} />
@@ -25,7 +24,6 @@ const Listar = () => {
                     </View>
                 </View>
             </ScrollView>
-            <Navigation />
         </View>
     )
 }
