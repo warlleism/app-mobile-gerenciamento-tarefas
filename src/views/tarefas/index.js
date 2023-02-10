@@ -9,43 +9,40 @@ const { width } = Dimensions.get('window')
 
 const Tarefas = () => {
 
+    const [count, seCount] = useState(0)
     useEffect(() => {
         animationRef.current?.play()
         animationRef.current?.play(30, 120);
-    }, [])
+
+        fetch('https://backend-warlleism.vercel.app/tarefas')
+            .then((res) => res.json())
+            .then((data) => setData(data))
+    }, [count])
+
+
+    const deletarTarefa = async (id) => {
+
+        const OptionsRegister = {
+            body: JSON.stringify({ id: id }),
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        await fetch('https://backend-warlleism.vercel.app/deletar', OptionsRegister)
+            .then((res) => res.json())
+            .then((response) => console.log(response))
+
+        seCount(count + 1)
+    };
 
 
     const animationRef = useRef(null)
 
     const Navi = useNavigation()
 
-    const [data, setData] = useState([
-        {
-            id: 1,
-            data: '14/02/2023 - 12:30 pm',
-            descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        },
-        {
-            id: 2,
-            data: '14/02/2023 - 12:30 pm',
-            descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        },
-        {
-            id: 3,
-            data: '14/02/2023 - 12:30 pm',
-            descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        },
-        {
-            id: 4,
-            data: '14/02/2023 - 12:30 pm',
-            descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        },
-        {
-            id: 5,
-            data: '14/02/2023 - 12:30 pm',
-            descricao: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        },
-    ]);
+    const [data, setData] = useState([]);
 
     const onClickItem = (item, index) => {
         const newArrData = data.map((e) => {
@@ -61,20 +58,14 @@ const Tarefas = () => {
             }
         })
 
-        setData(newArrData)
-
         setTimeout(() => {
-            const result = data.filter(e => e.id != item.id)
-            if (data.length <= 1) {
-                setData()
-            } else {
-                setData(result)
-            }
-        }, 1000)
+            deletarTarefa(item.id)
+        }, 500)
 
+        setData(newArrData)
     }
 
-    const Item = ({ descricao, data, item, index }) => (
+    const Item = ({ descricao, data, titulo, item, index }) => (
         <View style={styles.containerCards}>
             <View style={{
                 display: "flex",
@@ -100,7 +91,7 @@ const Tarefas = () => {
                     <Icon name="calendar" size={40} color={'#fff'} />
                 </View>
                 <View style={{ width: "75%" }}>
-                    <Text style={{ marginBottom: 10, color: "#CDCDCD" }}>{item.id}</Text>
+                    <Text style={{ marginBottom: 10, color: "#CDCDCD" }}>{titulo}</Text>
                     <Text style={{ marginBottom: 10, color: "#CDCDCD" }}>{data}</Text>
                     <Text style={{ marginBottom: 10, color: "#fff", fontSize: 15 }}>{descricao}</Text>
                 </View>
@@ -152,7 +143,7 @@ const Tarefas = () => {
                 <FlatList
                     numColumns={'1'}
                     data={data}
-                    renderItem={({ item, index }) => <Item descricao={item.descricao} data={item.data} item={item} index={index} />}
+                    renderItem={({ item, index }) => <Item descricao={item.descricao} data={item.data} titulo={item.titulo} item={item} index={index} />}
                     keyExtractor={item => item.id}
                 />
 

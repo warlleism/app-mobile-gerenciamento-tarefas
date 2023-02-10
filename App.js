@@ -41,6 +41,7 @@ export default function App() {
             name="Home"
             component={Home}
             options={{
+              unmountOnBlur: true,
               headerShown: false,
               tabBarLabel: '',
               tabBarIcon: ({ focused }) => {
@@ -62,6 +63,7 @@ export default function App() {
 
           <Tab.Screen name="Tarefas" component={Tarefas}
             options={{
+              unmountOnBlur: true,
               headerShown: false,
               tabBarLabel: '',
               tabBarIcon: ({ focused }) => {
@@ -81,13 +83,16 @@ export default function App() {
 
           <Tab.Screen name="Listar" component={Listar}
             options={{
+              unmountOnBlur: true,
               headerShown: false,
               tabBarLabel: ''
             }}
           />
 
           <Tab.Screen name="Nova" component={NovaTarefa}
+
             options={{
+              unmountOnBlur: true,
               headerShown: false,
               tabBarLabel: '',
               tabBarIcon: ({ focused }) => {
