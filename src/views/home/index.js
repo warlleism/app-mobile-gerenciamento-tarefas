@@ -12,6 +12,14 @@ const Home = () => {
 
     const [minuto, setMinuto] = useState()
 
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('https://backend-warlleism.vercel.app/tarefas')
+            .then((res) => res.json())
+            .then((data) => setData(data))
+    }, [])
+
     const [dados, setDados] = useState({
         img: '',
         hora: '',
@@ -125,13 +133,21 @@ const Home = () => {
 
                 <ScrollView horizontal>
 
-                    <TouchableOpacity onPress={() => Navi.navigate('Listar')} style={styles.containerTarefas}>
-                        <Icon name="calendar" size={30} color={'#fff'} style={{ marginRight: 10 }} />
-                        <View style={{ width: "90%" }}>
-                            <Text style={{ color: "#fff" }}>14/02/2023 - 12:30 pm</Text>
-                            <Text style={{ color: '#fff' }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
-                        </View>
-                    </TouchableOpacity>
+                    {
+                        data.map((e) => {
+                            return (
+                                <TouchableOpacity onPress={() => Navi.navigate('Listar')} style={styles.containerTarefas} key={e.id}>
+                                    <Icon name="calendar" size={30} color={'#fff'} style={{ marginRight: 10 }} />
+                                    <View style={{ width: "90%" }}>
+                                        <Text style={{ color: "#fff", fontWeight: "900", letterSpacing: 2 }}>{e.titulo}</Text>
+                                        <Text style={{ color: "#fff" }}>{e.data}</Text>
+                                        <Text style={{ color: '#fff' }}>{e.descricao}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
+
 
                 </ScrollView>
             </LinearGradient>

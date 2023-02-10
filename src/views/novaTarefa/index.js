@@ -1,6 +1,7 @@
 import Icon from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native';
-import { View, Dimensions, ScrollView, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator } from "react-native"
+import { View, Dimensions, ScrollView, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator, Button } from "react-native"
+import DatePicker from 'react-native-date-picker'
 import { useState } from 'react';
 
 
@@ -8,6 +9,8 @@ const { width } = Dimensions.get('window')
 
 const NovaTarefa = () => {
 
+    const [date, setDate] = useState(new Date())
+    const [open, setOpen] = useState(false)
 
     const defaultForm = {
         titulo: '',
@@ -77,6 +80,20 @@ const NovaTarefa = () => {
                 <TextInput placeholder='Título' placeholderTextColor={'#fff'} style={{ fontSize: 27, color: "#fff", width: "90%", alignSelf: "center", marginBottom: 70 }} onChangeText={(e) => setFormulario({ ...formulario, titulo: e })} />
                 <TextInput placeholder='Descrição' placeholderTextColor={'#fff'} style={{ fontSize: 23, color: "#fff", width: "90%", alignSelf: "center", marginBottom: 30 }} onChangeText={(e) => setFormulario({ ...formulario, descricao: e })} />
                 <TextInput placeholder='Data' placeholderTextColor={'#fff'} style={{ fontSize: 23, color: "#fff", width: "90%", alignSelf: "center", marginBottom: 30 }} onChangeText={(e) => setFormulario({ ...formulario, data: e })} />
+                
+                <Button title="Open" onPress={() => setOpen(true)} />
+                <DatePicker
+                    modal
+                    open={open}
+                    date={date}
+                    onConfirm={(date) => {
+                        setOpen(false)
+                        setDate(date)
+                    }}
+                    onCancel={() => {
+                        setOpen(false)
+                    }}
+                />
             </ScrollView>
         </View>
     )

@@ -17,13 +17,12 @@ export default function App() {
     <Provider>
       <NavigationContainer>
         <Tab.Navigator
-
           screenOptions={({ route }) => ({
             tabBarStyle: {
               position: 'absolute',
               bottom: 0,
               backgroundColor: "#013a52",
-              borderTopColor: "transparent",
+              borderTopColor: "#013a52",
             },
             tabBarButton: [
               "Listar",
@@ -34,7 +33,6 @@ export default function App() {
               }
               : undefined,
           })}
-
 
         >
           <Tab.Screen
@@ -59,7 +57,6 @@ export default function App() {
               }
             }}
           />
-
 
           <Tab.Screen name="Tarefas" component={Tarefas}
             options={{
@@ -90,7 +87,6 @@ export default function App() {
           />
 
           <Tab.Screen name="Nova" component={NovaTarefa}
-
             options={{
               unmountOnBlur: true,
               headerShown: false,
