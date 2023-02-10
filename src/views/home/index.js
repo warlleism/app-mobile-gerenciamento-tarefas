@@ -76,6 +76,7 @@ const Home = () => {
         setBackgroundImageInfo()
         setMinute()
         getData()
+
     }, [])
 
     return (

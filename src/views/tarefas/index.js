@@ -9,12 +9,13 @@ const { width } = Dimensions.get('window')
 
 const Tarefas = () => {
 
-    const animationRef = useRef(null)
-
     useEffect(() => {
         animationRef.current?.play()
         animationRef.current?.play(30, 120);
     }, [])
+
+
+    const animationRef = useRef(null)
 
     const Navi = useNavigation()
 
@@ -46,22 +47,31 @@ const Tarefas = () => {
         },
     ]);
 
-    const onClickItem = (item) => {
+    const onClickItem = (item, index) => {
         const newArrData = data.map((e) => {
             if (item.id == e.id) {
                 return {
                     ...e,
                     selected: true
                 }
-            }
-
-            return {
-                ...e,
-                selected: false
+            } else {
+                return {
+                    ...e
+                }
             }
         })
 
         setData(newArrData)
+
+        setTimeout(() => {
+            const result = data.filter(e => e.id != item.id)
+            if (data.length <= 1) {
+                setData()
+            } else {
+                setData(result)
+            }
+        }, 1000)
+
     }
 
     const Item = ({ descricao, data, item, index }) => (
@@ -84,30 +94,28 @@ const Tarefas = () => {
                     <IconTrash name="trash-o" size={20} color={'#fff'} />
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.containerContent}>
 
+            <TouchableOpacity style={styles.containerContent}>
                 <View style={{ marginRight: 10 }}>
                     <Icon name="calendar" size={40} color={'#fff'} />
                 </View>
-
                 <View style={{ width: "75%" }}>
+                    <Text style={{ marginBottom: 10, color: "#CDCDCD" }}>{item.id}</Text>
                     <Text style={{ marginBottom: 10, color: "#CDCDCD" }}>{data}</Text>
                     <Text style={{ marginBottom: 10, color: "#fff", fontSize: 15 }}>{descricao}</Text>
                 </View>
-
                 <View style={{
-                    position: 'absolute',
+                    left: 0,
                     width: "100%",
                     height: "100%",
-                    backgroundColor: "#00ddb3",
-                    left: 0,
+                    borderRadius: 10,
+                    position: 'absolute',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    borderRadius: 10,
+                    backgroundColor: "#0000004d",
                     opacity: item.selected ? 1 : 0
 
                 }}>
-
                     <Lottie
                         ref={animationRef}
                         autoPlay={true}
@@ -115,8 +123,6 @@ const Tarefas = () => {
                         source={require('../../assets/saveAnimation.json')}
                     />
                 </View>
-
-
             </TouchableOpacity>
         </View>
     );
@@ -125,7 +131,6 @@ const Tarefas = () => {
     return (
         <View style={{ width: width, height: '100%', backgroundColor: "#013a52" }}>
             <View style={styles.containerArrow}>
-
                 <TouchableOpacity onPress={() => Navi.navigate('Home')} style={{ width: 60 }}>
                     <Icon name="arrowleft" size={40} color={'#fff'} style={{ marginRight: 10 }} />
                 </TouchableOpacity>
