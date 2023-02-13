@@ -1,9 +1,10 @@
 import Icon from 'react-native-vector-icons/AntDesign'
 import IconTrash from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, FlatList, Dimensions, StyleSheet, TouchableOpacity, Alert, Modal, Pressable } from "react-native"
-import { useRef, useState, useEffect } from 'react';
+import { View, Text, FlatList, Dimensions, StyleSheet, TouchableOpacity, Modal, } from "react-native"
+import { useRef, useState, useEffect, useContext } from 'react';
 import Lottie from 'lottie-react-native';
+import { Context } from '../../context/provider';
 
 const { width } = Dimensions.get('window')
 const { height } = Dimensions.get('window')
@@ -11,6 +12,8 @@ const { height } = Dimensions.get('window')
 const Tarefas = () => {
 
     const [count, setCount] = useState(0)
+
+    const { setTarefas } = useContext(Context)
 
     const [id, setId] = useState(0)
 
@@ -39,8 +42,6 @@ const Tarefas = () => {
         };
 
         await fetch('https://backend-warlleism.vercel.app/deletar', OptionsRegister)
-            .then((res) => res.json())
-            .then((response) => console.log(response))
 
         setCount(count + 1)
     };
@@ -66,7 +67,7 @@ const Tarefas = () => {
 
         setTimeout(() => {
             deletarTarefa(item.id)
-        }, 500)
+        }, 1000)
 
         setData(newArrData)
     }
@@ -84,19 +85,25 @@ const Tarefas = () => {
                     }}>
                     <Icon name="check" size={20} color={'#fff'} style={{ marginRight: 30 }} />
                 </TouchableOpacity>
-                <TouchableOpacity >
-                    <Icon name="edit" size={20} color={'#fff'} style={{ marginRight: 30 }} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setId(item.id)
-                    setModalVisible(!modalVisible);
-                }
-                }>
+                <TouchableOpacity
+                    onPress={() => {
+                        setId(item.id)
+                        setModalVisible(!modalVisible);
+                    }
+                    }>
                     <IconTrash name="trash-o" size={20} color={'#fff'} />
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.containerContent}>
+            <TouchableOpacity
+                style={styles.containerContent}
+                onPress={() => {
+                    setTarefas(item)
+                    Navi.navigate('Nova')
+                }}
+                onLongPress={() => {
+                    setModalVisible(!modalVisible);
+                }}>
                 <View style={{ marginRight: 10 }}>
                     <Icon name="calendar" size={40} color={'#fff'} />
                 </View>

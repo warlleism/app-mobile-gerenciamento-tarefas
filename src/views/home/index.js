@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
+import { Context } from './../../context/provider';
 
 const { width } = Dimensions.get('window')
 
 const Home = () => {
 
     const Navi = useNavigation()
+
+    const { setTarefas } = useContext(Context)
+
 
     const [minuto, setMinuto] = useState()
 
@@ -18,6 +22,8 @@ const Home = () => {
         fetch('https://backend-warlleism.vercel.app/tarefas')
             .then((res) => res.json())
             .then((data) => setData(data))
+
+        setTarefas([])
     }, [])
 
     const [dados, setDados] = useState({
@@ -136,7 +142,11 @@ const Home = () => {
                     {
                         data.map((e) => {
                             return (
-                                <TouchableOpacity onPress={() => Navi.navigate('Listar')} style={styles.containerTarefas} key={e.id}>
+                                <TouchableOpacity onPress={() => {
+                                    setTarefas(e)
+                                    Navi.navigate('Nova')
+                                }
+                                } style={styles.containerTarefas} key={e.id}>
                                     <Icon name="calendar" size={30} color={'#fff'} style={{ marginRight: 10 }} />
                                     <View style={{ width: "90%" }}>
                                         <Text style={{ color: "#fff", fontWeight: "900", letterSpacing: 2 }}>{e.titulo}</Text>
@@ -147,8 +157,6 @@ const Home = () => {
                             )
                         })
                     }
-
-
                 </ScrollView>
             </LinearGradient>
 

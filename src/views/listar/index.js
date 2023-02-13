@@ -1,8 +1,6 @@
 import Icon from 'react-native-vector-icons/AntDesign'
-import Navigation from './../../navigation/index';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from "react-native"
-
 
 const { width } = Dimensions.get('window')
 
