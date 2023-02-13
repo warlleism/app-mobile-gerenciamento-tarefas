@@ -116,7 +116,7 @@ const Home = () => {
 
             <View style={{
                 alignItems: "center",
-                marginTop: 160,
+                marginTop: "30%"
             }}>
                 <Text style={{
                     fontSize: 40,

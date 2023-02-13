@@ -1,7 +1,6 @@
 import Home from './src/views/home';
 import { NavigationContainer } from '@react-navigation/native';
 import Tarefas from './src/views/tarefas/index';
-import Listar from './src/views/listar';
 import NovaTarefa from './src/views/novaTarefa/index';
 import Provider from './src/context/provider';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -77,14 +76,6 @@ export default function App() {
                 </View>
               }
             }} />
-
-          <Tab.Screen name="Listar" component={Listar}
-            options={{
-              unmountOnBlur: true,
-              headerShown: false,
-              tabBarLabel: ''
-            }}
-          />
 
           <Tab.Screen name="Nova" component={NovaTarefa}
             options={{
